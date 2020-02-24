@@ -6,19 +6,20 @@ class TreeNode(var `val`: Int) {
 }
 
 class Solution {
-    fun sumOf(root: TreeNode?): Int {
-        if (root == null) return 0
-        return root.`val` + sumOf(root.left) + sumOf(root.right)
-    }
+    var tilt = 0
 
-    fun tilt(node: TreeNode?): Int {
+    fun sumAndStoreTilt(node: TreeNode?): Int {
         if (node == null) return 0
-        return abs(sumOf(node.left) - sumOf(node.right))
+        val left = sumAndStoreTilt(node.left)
+        val right = sumAndStoreTilt(node.right)
+        tilt += abs(left - right)
+        return left + right + node.`val`
     }
 
     fun findTilt(root: TreeNode?): Int {
         if (root == null) return 0
-        return tilt(root) + tilt(root.left) + tilt(root.right)
+        sumAndStoreTilt(root)
+        return tilt
     }
 }
 
