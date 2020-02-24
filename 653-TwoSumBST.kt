@@ -4,28 +4,13 @@ class TreeNode(var `val`: Int) {
 }
 
 class Solution {
-    fun find(node: TreeNode?, orig: TreeNode?, target: Int): Boolean {
-        if (node == null) return false
-        if (node.`val` == target) {
-            if (node == orig) return false
-            return true
-        }
-        if (node.`val` > target) return find(node.left, orig, target)
-        if (node.`val` < target) return find(node.right, orig, target)
-        return false
-    }
-
-    fun traverse(root: TreeNode, node: TreeNode?, k: Int): Boolean {
-        if (node == null) return false
-        if (find(root, node, k-node.`val`)) return true
-        if (traverse(root, node.left, k)) return true
-        if (traverse(root, node.right, k)) return true
-        return false
-    }
+    val visited: MutableSet<Int> = mutableSetOf()
 
     fun findTarget(root: TreeNode?, k: Int): Boolean {
         if (root == null) return false
-        return traverse(root, root, k)
+        if (visited.contains(k-root.`val`)) return true
+        visited.add(root.`val`)
+        return findTarget(root.left, k) || findTarget(root.right, k)
     }
 }
 
