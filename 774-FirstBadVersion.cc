@@ -18,17 +18,12 @@ public:
         int bad = n;
         while (good < bad) {
             int cur = (int)(((long long)good+(long long)bad)/2LL);
-            if (isBadVersion(cur)) {
-                if (bad == cur)
-                    return bad;
+            if (isBadVersion(cur))
                 bad = cur;
-            } else {
-                if (good == cur)
-                    return bad;
-                good = cur;
-            }
+            else
+                good = cur+1;
         }
-        return 1;
+        return good;
     }
 };
 
