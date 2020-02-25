@@ -1,36 +1,27 @@
 class Solution {
-    fun dfs(x: Int, y: Int, found: Int, grid: Array<CharArray>, visited: Array<IntArray?>) {
-        if (visited[y]!![x] > 0 || grid[y][x] == '0')
+    fun dfs(x: Int, y: Int, grid: Array<CharArray>) {
+        if (grid[y][x] == '0')
             return
-        visited[y]!![x] = found
-
+        grid[y][x] = '0'
 
         if (y > 0)
-            dfs(x, y-1, found, grid, visited)
+            dfs(x, y-1, grid)
         if (y+1 < grid.size)
-            dfs(x, y+1, found, grid, visited)
+            dfs(x, y+1, grid)
         if (x+1 < grid[0].size)
-            dfs(x+1, y, found, grid, visited)
+            dfs(x+1, y, grid)
         if (x > 0)
-            dfs(x-1, y, found, grid, visited)
+            dfs(x-1, y, grid)
     }
 
     fun numIslands(grid: Array<CharArray>): Int {
-        // initialization
         var found = 0
-        var visited: Array<IntArray?> = arrayOfNulls<IntArray?>(grid.size)
-        grid.forEachIndexed { y, row ->
-            visited[y] = IntArray(row.size)
-            row.forEachIndexed { x, _ ->
-                visited[y]!![x] = 0
-            }
-        }
 
         grid.forEachIndexed { y, row ->
             row.forEachIndexed {x, cell ->
-                if (cell == '1' && visited[y]!![x] == 0) {
+                if (cell == '1') {
                     found += 1
-                    dfs(x, y, found, grid, visited)
+                    dfs(x, y, grid)
                 }
             }
         }
