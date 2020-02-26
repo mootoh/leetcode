@@ -31,16 +31,16 @@
         return p
     }
 
-    fun reverseList(head: ListNode?): ListNode? {
-        if (head == null)
-            return null
-        if (head.next == null)
-            return head
+    fun helper(cur: ListNode?, next: ListNode?): ListNode? {
+        if (cur == null)
+            return next
+        val tmp = cur.next
+        cur.next = next
+        return helper(tmp, cur)
+    }
 
-        val reversed = reverseList(head.next)
-        tail(reversed)?.next = head
-        head.next = null
-        return reversed
+    fun reverseList(head: ListNode?): ListNode? {
+        return helper(head, null)
     }
 }
 
@@ -55,4 +55,5 @@ fun main(args: Array<String>) {
         }
     }
     println(Solution().reverseList(src))
+    println(Solution().reverseList(ListNode(3)))
 }
