@@ -1,15 +1,15 @@
 class Solution {
     fun singleNumber(nums: IntArray): Int {
-        val visited = mutableMapOf<Int, Boolean>()
+        val visited = mutableSetOf<Int>()
         nums.forEach {
-            if (visited.get(it) != null) {
+            if (visited.contains(it)) {
                 visited.remove(it)
             } else {
-                visited.put(it, true)
+                visited.add(it)
             }
         }
 
-        return visited.keys.first()
+        return visited.first()
     }
 }
 
